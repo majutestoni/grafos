@@ -3,28 +3,6 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import sys
 
-df = pd.read_excel('teste.xlsx', sheet_name='planilha')
-
-siglas = df['Sigla'].tolist()
-conselheiros = df['Conselheiro(a)'].tolist()
-orgao = df['Órgão Indicante'].tolist()
-
-grafo = nx.Graph()
-
-# Criando um dicionário para mapear cada valor único para uma cor
-cores = {}
-cores.update({node: 'blue' for node in siglas})
-cores.update({node: 'red' for node in conselheiros})
-cores.update({node: 'green' for node in orgao})
-
-arestasCE = list(zip(conselheiros, siglas))
-arestasOE = list(zip(orgao, siglas))
-
-grafo.add_edges_from(arestasCE, weight=1)
-grafo.add_edges_from(arestasOE, weight=1)
-
-teste = caminhoMinimo(grafo, 'Márcio Antônio Chiumento')
-
 def caminhoMinimo(grafo, origem):
     # Inicialização das distâncias com infinito, exceto a origem que é zero
     distancias = {v: sys.maxsize for v in grafo}
@@ -53,6 +31,30 @@ def caminhoMinimo(grafo, origem):
     # Retorna as distâncias mais curtas a partir da origem
     return distancias
     
+df = pd.read_excel('teste.xlsx', sheet_name='planilha')
+
+siglas = df['Sigla'].tolist()
+conselheiros = df['Conselheiro(a)'].tolist()
+orgao = df['Órgão Indicante'].tolist()
+
+grafo = nx.Graph()
+
+# Criando um dicionário para mapear cada valor único para uma cor
+cores = {}
+cores.update({node: 'blue' for node in siglas})
+cores.update({node: 'red' for node in conselheiros})
+cores.update({node: 'green' for node in orgao})
+
+arestasCE = list(zip(conselheiros, siglas))
+arestasOE = list(zip(orgao, siglas))
+
+grafo.add_edges_from(arestasCE, weight=1)
+grafo.add_edges_from(arestasOE, weight=1)
+
+teste = caminhoMinimo(grafo, 'Márcio Antônio Chiumento')
+
+print(teste)
+
 plt.figure(figsize=(10, 8))
 nx.draw_networkx(grafo, with_labels=True, node_color=[cores[node] for node in grafo.nodes()], node_size=500, font_size=12)
 plt.show()
