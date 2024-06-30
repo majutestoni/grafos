@@ -25,8 +25,8 @@ def caminhoMinimo(grafo, origem):
 
         # Atualiza as distâncias dos vértices vizinhos
         for vizinho, peso in grafo[vertice_atual].items():
-            if distancias[vertice_atual] + peso < distancias[vizinho]:
-                distancias[vizinho] = distancias[vertice_atual] + peso
+            if distancias[vertice_atual] + peso['weight'] < distancias[vizinho]:
+                distancias[vizinho] = distancias[vertice_atual] + peso['weight']
 
     # Retorna as distâncias mais curtas a partir da origem
     return distancias
@@ -52,7 +52,6 @@ grafo.add_edges_from(arestasCE, weight=1)
 grafo.add_edges_from(arestasOE, weight=1)
 
 teste = caminhoMinimo(grafo, 'Márcio Antônio Chiumento')
-
 print(teste)
 
 plt.figure(figsize=(10, 8))
