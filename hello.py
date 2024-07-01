@@ -31,7 +31,8 @@ def caminhoMinimo(grafo, origem):
     # Retorna as distâncias mais curtas a partir da origem
     return distancias
     
-df = pd.read_excel('teste.xlsx', sheet_name='planilha')
+#df = pd.read_excel('teste.xlsx', sheet_name='planilha')
+df = pd.read_excel('coadm-05-2024.xlsx', sheet_name='planilha')
 
 siglas = df['Sigla'].tolist()
 conselheiros = df['Conselheiro(a)'].tolist()
@@ -52,7 +53,17 @@ grafo.add_edges_from(arestasCE, weight=1)
 grafo.add_edges_from(arestasOE, weight=1)
 
 teste = caminhoMinimo(grafo, 'Márcio Antônio Chiumento')
-print(teste)
+#print(teste)
+
+#Adicionar membros que se repetem ao dicionario
+membrosInfluentes = {}
+for membro in conselheiros:
+    if conselheiros.count(membro) > 1:
+        membrosInfluentes.update({membro:conselheiros.count(membro)})
+#print(membrosInfluentes)
+
+
+
 
 plt.figure(figsize=(10, 8))
 nx.draw_networkx(grafo, with_labels=True, node_color=[cores[node] for node in grafo.nodes()], node_size=500, font_size=12)
