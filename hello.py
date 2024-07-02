@@ -60,11 +60,31 @@ membrosInfluentes = {}
 for membro in conselheiros:
     if conselheiros.count(membro) > 1:
         membrosInfluentes.update({membro:conselheiros.count(membro)})
-#print(membrosInfluentes)
+print(membrosInfluentes)
+#Descobrindo a quantidade de ligações entre cada indicante
+#for indicante in orgao:
+    #ligacoes = caminhoMinimo(grafo, indicante)
+    #for numero in ligacoes:
+        #if numero > 1 :
+            #
+'''teste2=caminhoMinimo(grafo, 'Luis Manuel Rebelo Fernandes')
+print(teste2)
+print (teste2.get('FINEP'))
+print(teste2.get('AMAZUL'))
+for i in teste2:
+    if teste2.get(i) == 1:
+        if i not in conselheiros:
+            print(f'pulo = 1 até {i}')
+    if teste2.get(i) == 2:
+        if i not in conselheiros:
+            print(f'pulo = 2: até {i}')'''
+graus = {}
+for vertice in orgao:
+    if vertice not in graus:
+        graus.update({vertice:grafo.degree[vertice]}) #tratados para não repetir
+#print(f'graus: {graus}')
 
-
-
-
+print(type(grafo.degree['Representante dos Empregados']))
 plt.figure(figsize=(10, 8))
 nx.draw_networkx(grafo, with_labels=True, node_color=[cores[node] for node in grafo.nodes()], node_size=500, font_size=12)
 plt.show()
